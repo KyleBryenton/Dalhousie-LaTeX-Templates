@@ -1,4 +1,4 @@
-# Dalhousie-Beamer-Theme
+# Dalhousie-LaTeX-Templates
 
 My Dalhousie University-themed slide template for the LaTeX Beamer class.
 
@@ -19,7 +19,7 @@ My hope is two-fold:
 1. The showcases here will be interesting for experienced LaTeX users.
 2. The examples will be pedagogically useful for newer LaTeX users and will help kick-start their first few presentations.
 
-Also included is my personal colour-blind friendly swatches I use for my graphics. See: [`ColourBlindSwatches.txt`](https://github.com/KyleBryenton/Dalhousie-Beamer-Theme/blob/main/ColourBlindSwatches.txt)
+Also included is my personal colour-blind friendly swatches I use for my graphics. See: [`ColourBlindSwatches.txt`](https://github.com/KyleBryenton/Dalhousie-LaTeX-Templates/blob/main/ColourBlindSwatches.txt)
 
 _I intend to clean up my Dalhousie Poster Template and add it here at a later date. If interested, please contact me for a pre-release version._
 
@@ -31,15 +31,15 @@ To use these templates, follow these steps:
 
 Overleaf is an online LaTeX editor that allows you to compile LaTeX documents in your browser.
 
-1. Go to [`Dalhousie-Beamer-Theme`](https://github.com/KyleBryenton/Dalhousie-Beamer-Theme).
+1. Go to [`Dalhousie-LaTeX-Templates`](https://github.com/KyleBryenton/Dalhousie-LaTeX-Templates).
 
 2. Click the green `<> Code` button, and then `Download ZIP`.
 
 3. Sign-in to [Overleaf](https://www.overleaf.com/project)
   
-4. Click `New Project`, then `Upload Project`, and select `Dalhousie-Beamer-Theme-main.zip` from your Downloads folder.
+4. Click `New Project`, then `Upload Project`, and select `Dalhousie-LaTeX-Templates-main.zip` from your Downloads folder.
 
-5. Click `DalBeamerTheme_Showcase.tex`, then compile.
+5. Click the `.tex` file of the template you want, then compile.
 
 ### Using a Local LaTeX Editor
 
@@ -47,18 +47,20 @@ Instead of Overleaf (or if you need extended compile times) you may use a local 
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/KyleBryenton/Dalhousie-Beamer-Theme.git
+    git clone https://github.com/KyleBryenton/Dalhousie-LaTeX-Templates.git
     ```
 
-2. Ensure `beamerthemeDal_16x9.sty`, `beamercolorthemeDal.sty`, and `Dal_Background_16x9.pdf` are in the same directory as your `.tex` file.
+2. Ensure the directory structure is preserved.
+   - For the Beamer Slides: `beamerthemeDal_16x9.sty`, `beamercolorthemeDal.sty`, and `Dal_Background_16x9.pdf` should be in the same directory as your `.tex` file.
+   - For the Thesis Template: `dalthesis.cls` should be in the same directory as your `.tex` file.
 
-3. Open the `DalBeamerTheme_Showcase.tex` file with your preferred LaTeX editor. 
+4. Open the `.tex` file of choice with your preferred LaTeX editor. 
 
-4. Compile with `pdflatex`.
+5. Compile with `pdflatex`.
 
 ## Contributing
 
-I welcome anybody to contribute, share, or modify this template or the `.sty` files to suit their needs. Please follow these steps to contribute:
+I welcome anybody to contribute, share, or modify this template or the `.sty` or `.cls` files to suit their needs. Please follow these steps to contribute:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
@@ -68,4 +70,4 @@ I welcome anybody to contribute, share, or modify this template or the `.sty` fi
 
 ## License
 
-This project is licensed under the GNU General Public License Version 3. See the [`LICENSE`](https://github.com/KyleBryenton/Dalhousie-Beamer-Theme/blob/main/LICENSE) file for details.
+This project is licensed under the GNU General Public License Version 3. See the [`LICENSE`](https://github.com/KyleBryenton/Dalhousie-LaTeX-Templates/blob/main/LICENSE) file for details.
