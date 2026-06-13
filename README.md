@@ -1,6 +1,6 @@
 # Dalhousie-LaTeX-Templates
 
-My Dalhousie University-themed slide template for the LaTeX Beamer class.
+My Dalhousie University-themed LateX templates for slides, posters, and theses.
 
 Previously, this was a part of [`slides-posters`](https://github.com/KyleBryenton/slides-posters). I decided to create a separate repository after noticing interest from others. The `.tex` file has been updated to include interesting showcases and useful examples.
 

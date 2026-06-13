@@ -1,0 +1,467 @@
+\documentclass[12pt,letterpaper,oneside,titlepage,final]{dalthesis}
+\makeindex 
+
+
+% REMEMBER TO TURN GEOMETRY TO HAVE A MARGIN ON EVERY 2ND PAGE WHEN PRINTING
+
+%Useful Packages
+\usepackage[left=1.5in, 
+            right=1.0in, 
+            top=1.0in, 
+            bottom=1.0in]{geometry}%Dal FGS requires 1.5" on left, 1" on all others.
+\usepackage{lipsum}                %For \lipsum[2-3]
+\usepackage{framed}                %For \begin{framed}
+\usepackage{mathtools}             %Extension of amsmath package
+\usepackage{graphicx}              %Extension of graphic package.
+\usepackage[colorlinks,pdfusetitle]{hyperref}%Makes references clickable links
+\usepackage[capitalize]{cleveref}  %Formats equation/table/figure references intelligently.
+\usepackage{array}                 %Extending the array and tabular environments
+\usepackage{booktabs}              %Publication quality tables in LaTeX
+\usepackage{listings}              %Typeset source code listings using LaTeX
+\usepackage{float}                 %Improved interface for floating objects
+\usepackage[section]{placeins}     %Control float placement
+\usepackage{verbatim}              %Reimplementation of and extensions to LaTeX verbatim
+\usepackage{enumitem}              %Controls layout of enumerate, itemize and description
+\usepackage{caption, subcaption}   %Adds \begin{subfigure} to existing figures.
+\usepackage{fancyhdr}              %Adds fancy headers 
+\usepackage{bm}                    %Outdated package that still works for bolding greek letters.
+\usepackage{indentfirst}           %Indents the first paragraph after new sections
+\usepackage{amssymb}               %Adds \mathbb fonts which is used for real numbers R for instance.
+\usepackage{mathrsfs}              %Adds \mathscr{} which is just extra script math characters.
+\usepackage{physics}               %Adds \abs{} and other physics related commands
+\usepackage{braket}                %Adds \braket{0|0}, \bra{0}, or \ket{0}
+\usepackage{chemformula}           %To typeset a chemical formula, use \ch{1/2 H2O}
+\usepackage{arydshln}              %Can add dashed lines to array via \begin{array}{c;{2pt/2pt}c}
+\usepackage{upgreek}               %To get \uppi and \upalpha for instance
+\usepackage[toc,page]{appendix}    %For appendices
+\usepackage{abstract}              %For better abstract
+\usepackage{titlesec}              %Alternative section titles
+\usepackage{setspace}              %Control line spacing within a document, \singlespacing, etc
+\usepackage{multirow}              %Used for multi-spanning rows in Delocalization error paper
+\usepackage{mwe}                   %Used to load example-image
+\usepackage{multicol}              %Used for list of symbols and abbreviations 
+
+
+% LIST OF ABBREVIATIONS SETUP
+\setlength{\columnseprule}{0.4pt} % Add vertical line between columns
+\newlength{\symwidth}             % Define "symwidth" so the symbol width can vary as needed
+\setlength{\symwidth}{1.5cm}      % Set initial length to be 1.5cm
+% The \sym command can be used to add a symbol (#1) and a description (#2) to the list of symbols and abbreviations. 
+% \makebox[\symwidth][l]{#1}     - Creates a left-aligned left column of width = \symwidth
+% \begin{minipage}[t]{width}     - Creates a top-aligned textbox for the description, allowing text to wrap across multiple lines.
+% \dimexpr                       - \dimexpr is "dimension expression" allowing you to add dimensions together in a stable way.
+% \linewidth-\symwidth\relax     - The width of the minipage becomes \linewidth-\symwidth. \relax ends the calculation safely. 
+% \par\vspace{-0.3em}            - Modify this value to change the vertical spacing between entries
+\newcommand{\sym}[2]{%
+  \noindent\makebox[\symwidth][l]{#1}%
+  \begin{minipage}[t]{\linewidth-\symwidth}
+  #2
+  \end{minipage}\par\vspace{-0.3em}
+}
+% The \symheader command is used to insert header lines in the List of Abbreviations. It's mostly just custom spacing and adding
+% horizontal lines, making use of \sym directly to ensure the spacing via \symwidth stays consistent.
+\newcommand{\symheader}[2]{%
+  \noindent\rule{\linewidth}{0.6pt}\par
+  \vspace{-0.8em}%
+  \sym{\textbf{#1}}{\textbf{#2}}\par
+  \vspace{-1.0em}%
+  \noindent\rule{\linewidth}{0.6pt}\par
+  \vspace{0.4em}%
+}
+
+% BIBLIOGRAPHY SETUP
+\usepackage[utf8]{inputenc} %Needed for some citations
+\DeclareUnicodeCharacter{1EF3}{\`y}
+\DeclareUnicodeCharacter{1E81}{\`w}
+\usepackage[backend=biber,
+            backref=true,
+            backrefstyle=two,
+            maxbibnames=10,
+            minbibnames=10,
+            sorting=none, 
+            giveninits=true,
+            doi=true,
+            intitle=true,
+            articletitle=true,
+            style=nature]{biblatex}
+    \DefineBibliographyStrings{english}{
+        backrefpage={p.},
+        backrefpages={p.}
+    }
+    \addbibresource{Bibliography.bib}    
+
+% CLEVERREF SETUP
+  \Crefname{equation}{Eq.}{Eqs.}
+  \Crefname{chapter}{Chapter}{Chapters}
+  \Crefname{section}{Section}{Sections}
+  \Crefname{figure}{Figure}{Figures}
+  \Crefname{tabular}{Table}{Tables}
+  \Crefname{table}{Table}{Tables}
+  \hypersetup{
+    colorlinks=true,
+    citecolor=blue,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+  }
+
+
+% CUSTOM COMMANDS
+  \newcommand{\e}{\mathrm{e}}    %Exponential
+  \renewcommand{\i}{\mathrm{i}}  %Imaginary Number 
+  \renewcommand{\pi}{\uppi}      %Convert all pi to upright. I'll never need italicized.
+  \newcommand*{\doi}[1]{doi: #1} %Used to easily add DOIs if needed
+
+% FANCYHEADER SETUP
+  %\renewcommand{\chaptermark}[1]{\markboth{\footnotesize \MakeUppercase{#1}}{}}
+  %\renewcommand{\sectionmark}[1]{\markright{\footnotesize \MakeUppercase{#1}}}
+  \setlength{\headheight}{15pt} %Fancyhdr gives warnings unless this value is at least 14.49998pt. 
+  \fancypagestyle{Body}{%This will work for section headers
+	\fancyhf{}
+	\fancyhead[R]{\thepage}
+	\fancyhead[L]{\S\rightmark}
+  }
+  \fancypagestyle{Chapter}{%This will work for chapter headers
+	\fancyhf{}
+	\fancyhead[R]{\thepage}
+	\fancyhead[L]{\leftmark}
+  }
+  \renewcommand{\bibsetup}{\thispagestyle{Chapter}\pagestyle{Chapter}}
+
+% DAL FGS SETUP
+  \allowdisplaybreaks
+  \numberwithin{equation}{section}
+  \raggedbottom
+  \captionsetup{width=0.9\textwidth}
+  \setlength{\tabcolsep}{2.5pt}
+  \setitemize{itemsep=-0.5em} 
+  \hbadness=4000              % Stops the "Underfull \hbox" warnings
+  \setlength{\parskip}{0.5em} % Adds slight spacing between paragraphs without need for //
+  \onehalfspacing             % Dal FGS Requires \onehalfspacing or \doublespacing
+                              % Switch to \singlespacing for TOC/LOF/LOT/Bib, then switch back.
+
+
+% TITLE PAGE SETUP
+  \renewcommand{\contentsname}{Table of Contents}
+  \newcommand{\ThesisAuthor}{Author's-Name}
+  \newcommand{\ThesisTitle}{Title-of-Thesis}
+  \newcommand{\ThesisDegree}{Title-of-Degree}%Doctor of Philosophy / Master of Science
+  \newcommand{\ThesisMonth}{Month-of-Defence}
+  \newcommand{\ThesisYear}{Year-of-Defence}
+  \newcommand{\ThesisAdvisor}{Professor-Name}
+  \newcommand{\ThesisUniversity}{Dalhousie University}
+  \newcommand{\ThesisLocation}{Halifax, Nova Scotia}
+  \newcommand{\ThesisLandAcknowledgement}{Dalhousie University is located in the Mi'kma'ki, the\\%
+	                                     ancestral and unceded territory of the Mi'kmaq.\\%
+	                                     We are all Treaty people.%
+	                                     }
+  \newcommand{\skiplines}[1]{\vspace{#1\baselineskip}}
+
+
+\begin{document} 
+\pagenumbering{roman}
+
+\begin{titlepage}
+\centering
+\vspace*{\fill}
+\textsc{\textbf{\large{\ThesisTitle}}}\\%
+\skiplines{2}%
+\textbf{
+	{\!}by\\% Small negative space corrects block kerning issues for small lines caused by textbf
+	\skiplines{2}%
+	\ThesisAuthor\\%
+	\skiplines{6}%
+	Submitted in partial fulfilment of the requirements\\%
+	for the degree of \ThesisDegree\\%\ in \ThesisProgram\\
+	\skiplines{2}%
+	{\!}at\\% Small negative space corrects block kerning issues for small lines caused by textbf
+	\skiplines{2}%
+	\ThesisUniversity\\%
+	\ThesisLocation\\%
+	\ThesisMonth, \ThesisYear\\%
+	\skiplines{2}%
+	\ThesisLandAcknowledgement\\%
+	\skiplines{4}%
+	\copyright\ Copyright by \ThesisAuthor, \ThesisYear%
+}
+\vspace{\fill} % centers title page vertically
+\end{titlepage}
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter*{\centering\large\textsc{Dedication}} \setcounter{page}{2}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\vspace*{6cm}
+\begin{center}
+\large 
+\noindent{}Dedication Goes Here (Optional)\\
+\noindent{}$\mathbf{\dots}$\\
+\end{center}
+\clearpage
+
+
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter*{\centering\large\textsc{Preface}} 
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I want to start by acknowledging that this Dalhousie thesis template is built on a slightly modified version of the \texttt{ocethesis.cls} class, maintained by Prof.\@ Dan Kelley on his personal GitHub \href{https://github.com/dankelley/dal-oce-thesis}{( github.com/dankelley/dal-oce-thesis )}. This work branched off somewhere around 2015, and the \texttt{ocethesis} class was eventually passed from student to student until it reached me. Over the years, I've tweaked it to suit my own style while fixing some issues that arose due to deprecated packages, and whatever else happens to old code when you haven't looked at it for a few months. I thank the previous contributors to this \TeX\ class file, Dan Kelley, Vlado Keselj, Mike McAllister, Clyde Clements, Steven Matheson, Joseph Pallas, and others whom I have missed. 
+
+This class file, now renamed to \texttt{dalthesis.cls}, is hosted alongside this thesis \texttt{.tex} template on my GitHub \href{https://github.com/KyleBryenton/Dalhousie-LaTeX-Templates}{( github.com/KyleBryenton/Dalhousie-LaTeX-Templates )} to help take some of the pain out of the thesis writing process for future Dalhousie graduate students. This template is geared towards disciplines like chemistry or physics, and it adheres to Dalhousie Faculty of Graduate Studies (FGS) format requirements as of Summer 2025. An example of a completed thesis using this template can be seen here: \href{https://dalspace.library.dal.ca/items/2f33c6cd-166c-4031-bc01-ba1deaab62b7}{( dalspace.library.dal.ca/items/2f33c6cd-166c-4031-bc01-ba1deaab62b7 )}. I've left various packages and settings in the template that I found helpful during my writing process, complete with comments to help clarify what these packages can be used for.
+
+This template uses a compact ``List of Abbreviations and Symbols'' that some theory-heavy students may find desirable. This compact template avoids having potentially one or two dozen pages dedicated to that part of the front matter. I've tried to make this as user-friendly as possible. The comments in that section of the \texttt{.tex} will guide you, and my full lists remain intact to serve as examples.\\
+
+The bibliography is set up to use a provided \texttt{.bib} file using Biber (not Bib(La)TeX) as the backend. Some installations will automatically adjust to use Biber (such as Overleaf), but others may require you to change your compilation settings. I've left some citations in this template to showcase the bibliography format. The reference style expands on the ``Nature'' format by including additional information such as full article names, full author lists, digital online identifiers (DOIs), and back references (adds hyperlinks to a reference pointing to each page it was cited in the manuscript). To help compile your bibliography file, I recommend the Google Scholar Button extension (on Chromium-based browsers, Firefox, and others) to generate the \texttt{bibtex} entries. You will sometimes need to add the pages and DOI fields manually, check author lists to convert unicode accents to \TeX, ensure the entry doesn't cap the number of authors listed and end with ``and others'', and manually abbreviate the name of the journal used. To consistently abbreviate journal names, I highly recommend UBC's Woodward Library Science and Engineering Journal Abbreviations tool: \href{https://woodward.library.ubc.ca/woodward/research-help/journal-abbreviations/}{( woodward.library.ubc.ca/woodward/research-help/journal-abbreviations/ )}.
+
+The final step for submitting your thesis is to convert to PDF/A-1b format. However, this process can be quite tricky. To convert to PDF/A-1b, I used \href{https://xodo.com/pdf-to-pdfa}{( xodo.com/pdf-to-pdfa )} and to validate I used \href{https://www.pdfforge.org/online/en/validate-pdfa}{( www.pdfforge.org/online/en/validate-pdfa )}. If your \texttt{tikz} graphics are affected by this conversion, it may be due to lack of support for RGBA values. Convert your RGBA values to plain RGB, and ensure all fill opacity values used in your \texttt{tikz} are set to \texttt{fill opacity=1.0}. If this conversion causes compression of any graphics used in your thesis, I was able to alleviate this by converting PNG $\rightarrow$ PDF (at 1$\times$ scale) $\rightarrow$ PDF (at 3$\times$ scale) using GIMP for the affected images.
+
+Lastly, I made this template based on my own personal preferences, and any advice or suggestions offered here reflect that. If your advisor, committee, department, or faculty disagree with anything in this template, please defer to their input over my own. I hope you find this template useful.
+
+
+\clearpage
+
+
+
+
+\singlespacing              % Use more compact spacing in TOCs / Lists
+\interlinepenalty=10000	    % Forces no pagebreaks
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\tableofcontents                                                 \clearpage
+\listoftables    \addcontentsline{toc}{chapter}{List of Tables}  \clearpage
+\listoffigures   \addcontentsline{toc}{chapter}{List of Figures} \clearpage
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\onehalfspacing             % Switch back to default
+\interlinepenalty=0    	    % Switch back to default
+
+
+
+
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter*{\centering\large\textsc{Abstract}}  \addcontentsline{toc}{chapter}{Abstract} 
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As of 2025, Dalhousie's Faculty of Graduate Studies (FGS) Thesis Format Guidelines require the abstract to be one page. It may be single-spaced if necessary, but it must not include illustrations or footnotes. Note that abstracts archived by the library are truncated to 150 words for MSc theses and 350 words for PhD theses. A good abstract should summarize the work and frame it within a common theme, rather than discussing a series of disjointed papers. This is where you introduce the reader to that flow.
+
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter*{List of Abbreviations and Symbols Used}
+\addcontentsline{toc}{chapter}{List of Abbreviations and Symbols Used}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+% INSTRUCTIONS FOR HOW TO GENERATE LIST OF ABBREVIATIONS AND SYMBOLS
+%
+% 1. Entries should be added using the custom \sym command. (e.g.):
+%        \sym{ $\pi$ }{ Pi, the ratio of a circle's circumference to its diameter ($=3.14159265\ldots$)} 
+%
+% 2. I suggest manually placing columnbreaks are and add a new header using the \symheader command. (e.g.):
+%        \columnbreak
+%        \symheader{Symbol}{Description}
+%
+% 3. To add a new category within a table, I suggest adding a space before, and a \par after. (e.g.):
+%        \vspace*{1em}
+%        \textit{\textbf{Common or fundamental constants}}\par
+%
+% 4. Use \setlength{\symwidth}{1.3cm} to decide the spacing between the first and second parts of your
+%    headings. I found around 1.3cm was good for math symbols, and 1.7cm was good for abbreviations.
+%
+% If your multicols enviroment ends with enough space to not fully fill the first column, it will try
+% to balance what remains between both columns. If you would rather it fill the left column completely
+% use \begin{multicols*}{2} rather than \begin{multicols}{2}. Between multicols (i.e. one used for 
+% symbols, and another used for abbreviations) I suggest using a \clearpage or a \vspace*{1cm} between
+% them to visually separate them. For font size, I suggest using \scriptsize or \footnotesize. Both 
+% are acceptable and will pass Dalhousie FGS guidelines. 
+
+\scriptsize
+\begin{multicols}{2} \setlength{\symwidth}{1.3cm}
+\input{Assets_Ch0/ListOfAbbreviations_1}
+\end{multicols}
+\normalsize
+
+%% For a complete list with a list of abbreviations, and Latin and Greek mathematical symbols, 
+%% un-comment the 2nd and 3rd tables below
+%\scriptsize
+%\clearpage
+%\begin{multicols}{2} \setlength{\symwidth}{1.7cm}
+%\input{Assets_Ch0/ListOfAbbreviations_2}
+%\end{multicols}
+%\clearpage
+%\begin{multicols}{2} \setlength{\symwidth}{1.5cm}
+%\input{Assets_Ch0/ListOfAbbreviations_3}
+%\end{multicols}
+%\normalsize
+
+\clearpage
+
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter*{\centering\large\textsc{Acknowledgements}} \addcontentsline{toc}{chapter}{Acknowledgements}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+While the acknowledgements can be as short or long as desired, they typically follow the following structure:
+\begin{itemize}
+\item One paragraph thanking your committee members
+\item One paragraph thanking your supervisor(s) and advisor(s)
+\item One paragraph thanking your group, peers, and colleagues
+\item One paragraph thanking your friends, family, and support network
+\item And perhaps an extra paragraph at the start and/or end of your own creation
+\end{itemize}
+
+\clearpage
+
+
+
+
+\pagestyle{Body} \pagenumbering{arabic} 
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter{Introduction} \label{Introduction} \thispagestyle{Chapter}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\begin{quote}
+\textsl{``Thirty-one years ago Dick Feynman told me about his `sum over histories' version of quantum mechanics. `The electron does anything it likes,' he said. `It just goes in any direction, at any speed, forward and backward in time, however it likes, and then you add up the amplitudes and it gives you the wave function.' I said to him `You're crazy.' But he isn't.''} \cite{rioux2023quantum} \\ 
+$\sim$ Prof.\@ Freeman Dyson (1923--2020)
+\end{quote}
+\vspace*{0.5cm}
+
+\section{Introduction Suggestions} \label{C1:Suggestions} 
+
+The introduction, theory, and conclusions sections are written in the main \texttt{.tex} file. These sections will be started for your Qualifying Report, and expanded on for your final thesis. A typical introduction should introduce readers to the research area, perhaps provide some historical context, and should establish why the field is important. The introduction chapter is typically 5--15 pages long.
+
+\section{Thesis Overview} \label{C1:Overview}
+
+Your introductory chapter normally concludes with a section dedicated to the thesis overview. Here, you should touch on each chapter (and perhaps major sections) in your thesis, briefly walking through what the reader can expect to find. Try to connect the themes into something that flows nicely.
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter{Theory} \label{Theory} \thispagestyle{Chapter}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\begin{quote}
+\textsl{``What I cannot create, I do not understand. Know how to solve every problem that has been solved.''} \cite{feynman1988blackboard} \\ 
+$\sim$ Prof.\@ Richard Feynman (1918--1988)
+\end{quote}
+\vspace*{0.5cm}
+
+\section{Theory Suggestions} \label{C2:Suggestions}
+
+Your theory section should explain, in detail, all the prerequisite theory necessary to understand any manuscripts included in later chapters of the dissertation. Some opt to have 2--3 smaller chapters dedicated to theory/methods rather than just one longer one. The total length of the theory chapters is typically 20--50 pages, but could be more or less depending on the research area. 
+
+
+\begin{figure}[h!] % PERDEW'S LADDER
+\input{Assets_Ch2/PerdewsLadder.tex}
+\caption[Example Figure \#1: \texttt{tikz} example of Perdew's Ladder.]{Example Figure \#1: Here I include a \texttt{tikz} example of Perdew's Ladder \cite{perdew2001jacob}. The \texttt{tikz} package lets you use LaTeX code to generate beautiful vector graphics using standard LaTeX sizes and fonts. This also prevents graphics from being compressed and drastically reduces the file size of your thesis. I generated many graphics in my thesis using \href{https://www.mathcha.io}{( www.mathcha.io )}, and I cannot recommend it enough. \label{F2.1}}
+\end{figure}
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter[The title of your publication that has been inserted as a chapter in the main body of your thesis]{Short Paper Title Suitable for Chapter Heading} 
+\chaptermark{Short Paper Title Suitable for Chapter Heading}
+\label{Oscallot} \thispagestyle{Chapter}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\begin{quote}
+\textsl{``The career of a young theoretical physicist consists of treating the harmonic oscillator in ever-increasing levels of abstraction.''} \cite{coleman2019lectures} \\ 
+$\sim$ Prof.\@ Sidney Coleman (1937--2007) 
+\end{quote}
+\vspace*{1cm}
+{
+\noindent \color{darkgray} 
+This chapter is adapted from: \textbf{Bryenton, K.\@ R.\@}, \& Johnson, E.\@ R.\@ \textit{Many-Body Dispersion in Model Systems and the Sensitivity of Self-Consistent Screening}.\@ J.\@ Chem.\@ Phys.\@, \textbf{158}, 20, 204110.\@ (2023) \cite{bryenton2023many}\\
+\smallskip\\
+Author contributions: K.R.B.\ developed the mathematical model, wrote the software, generated all data, and wrote the first draft of the manuscript.
+}
+\clearpage
+\input{Assets_Ch3/ch3.tex} 
+
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\chapter[Conclusions]{Conclusions} \label{Conclusions} \thispagestyle{Chapter}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\begin{quote}
+\textsl{``One never notices what has been done; one can only see what remains to be done.''} \cite{ratcliffe2014oxford} \\ 
+$\sim$ Prof.\@ Marie Curie (1867--1934) 
+\end{quote}
+\vspace*{1cm}
+
+
+
+\section{Dissertation Summary} \label{Ch4:Summary}
+
+For the summary, you can walk through each chapter, briefly summarizing the findings and connecting them to convey a common theme.
+
+
+\section{Future Work} \label{Ch4:FutureWork}
+
+For future work, consider trying to find 2--3 new avenues your research could progress. Each one can become its own subsection.
+
+\clearpage
+
+
+
+
+
+
+
+
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\clearpage
+\interlinepenalty=10000	    % Forces no pagebreaks in bibliography entries
+\pagestyle{Chapter} 	    % Without, this will make last page of bibliography have \pagestyle{body}
+\singlespacing              % FGS requests single spacing in bib, 1.5 or 2.0 between entries
+{\sloppy \printbibliography[heading=bibintoc, title={Bibliography}] }%This adds Bibliography to ToC
+\onehalfspacing             % Switch back to default
+\interlinepenalty=0    	    % Switch back to default
+\pagestyle{Body}   		    % Switch back to default
+\clearpage 
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\appendix 
+\chapter{Chapter 1 Supplement} \label{A:C1sup} \thispagestyle{Chapter}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Content that distracts from the flow of the dissertation, or relevant material included in the ESI of your articles, is normally placed in the appendices. Here, I've broken the appendix into ``supplements'' for each chapter, but this is just a personal preference.
+
+
+\begin{figure}[h!] % PERDEW'S LADDER
+\centering
+\includegraphics[width=0.6\textwidth]{example-image}
+\caption[Example Figure \#2: An example using \texttt{includegraphics}.]{Example Figure \#2: Here is a figure example where we import the graphic using \texttt{includegraphics} rather than \texttt{input}.  \label{FA.1}}
+\end{figure}
+
+
+
+\chapter{Chapter 2 Supplement} \label{A:C2sup} \thispagestyle{Chapter}
+
+
+\section{Common Unit Conversion Factors} \label{A:Units}
+
+\begin{table}[h]
+\centering
+\caption[Example Table: Conversion factors between common units used in electronic structure theory.]{Example Table: Conversion factors between common energy units used in electronic structure theory to six significant figures. Units include: Hartree (Ha.), electronvolt (eV), kilocalorie per mole (kcal/mol), kilojoule per mole \mbox{(kJ/mol)}, and wavenumber (cm$^{-1}$). To convert from a row unit to a column unit, multiply by the corresponding table entry. For commonly used units of length, note that $1~\text{\AA} = 10^{-10}~\text{m} \approx 1.88973~\text{bohr}$. Values were obtained from Ref.~\cite{rumble2021crc}.}
+\begin{tabular}{r | lllll}
+\hline
+           & Ha.                     & eV                      & kcal/mol                & kJ/mol                  & cm$^{-1}$ \\ \hline
+ Ha.       & 1                       & 27.2114                 & 627.510                 & 2625.50                 &  219475   \\
+ eV        & 3.67493$\times 10^{-2}$ & 1                       & 23.0605                 & 96.4853                 & 8065.54   \\             
+ kcal/mol  & 1.59360$\times 10^{-3}$ & 4.33641$\times 10^{-3}$ & 1                       & 4.18400                 & 349.755   \\             
+ kJ/mol    & 3.80880$\times 10^{-4}$ & 1.03643$\times 10^{-3}$ & 2.39006$\times 10^{-1}$ & 1                       & 83.5935   \\             
+ cm$^{-1}$ & 4.55634$\times 10^{-6}$ & 1.23984$\times 10^{-4}$ & 2.85914$\times 10^{-3}$ & 1.19627$\times 10^{-3}$ & 1         \\ \hline
+ \end{tabular}
+\end{table}
+
+
+\end{document}
