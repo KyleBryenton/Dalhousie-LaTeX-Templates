@@ -2,7 +2,6 @@
 
 My Dalhousie University-themed LateX templates for slides, posters, and theses.
 
-Previously, this was a part of [`slides-posters`](https://github.com/KyleBryenton/slides-posters). I decided to create a separate repository after noticing interest from others. The `.tex` file has been updated to include interesting showcases and useful examples.
 
 ## Table of Contents
 
@@ -22,6 +21,8 @@ My hope is two-fold:
 Also included is my personal colour-blind friendly swatches I use for my graphics. See: [`ColourBlindSwatches.txt`](https://github.com/KyleBryenton/Dalhousie-LaTeX-Templates/blob/main/ColourBlindSwatches.txt)
 
 _I intend to clean up my Dalhousie Poster Template and add it here at a later date. If interested, please contact me for a pre-release version._
+
+Previously, the slide template was a part of [`slides-posters`](https://github.com/KyleBryenton/slides-posters).
 
 ## Usage
 
