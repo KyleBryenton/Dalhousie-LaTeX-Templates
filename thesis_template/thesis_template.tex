@@ -108,7 +108,7 @@
 
 % CUSTOM COMMANDS
   \newcommand{\e}{\mathrm{e}}    %Exponential
-  \renewcommand{\i}{\mathrm{i}}  %Imaginary Number 
+%  \renewcommand{\i}{\mathrm{i}}  %Imaginary Number  --- If you use this, beware of names in your bibliography typeset with \'\i.
   \renewcommand{\pi}{\uppi}      %Convert all pi to upright. I'll never need italicized.
   \newcommand*{\doi}[1]{doi: #1} %Used to easily add DOIs if needed
 
@@ -228,9 +228,16 @@ Lastly, I made this template based on my own personal preferences, and any advic
 \singlespacing              % Use more compact spacing in TOCs / Lists
 \interlinepenalty=10000	    % Forces no pagebreaks
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-\tableofcontents                                                 \clearpage
-\listoftables    \addcontentsline{toc}{chapter}{List of Tables}  \clearpage
-\listoffigures   \addcontentsline{toc}{chapter}{List of Figures} \clearpage
+\tableofcontents
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\clearpage
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \onehalfspacing             % Switch back to default
 \interlinepenalty=0    	    % Switch back to default
